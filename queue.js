@@ -1,46 +1,80 @@
 'use strict'
 
-function Queue(blockLength = 100) {
+function Queue() {
 	let length = 0
-	let headIndex = 0, tailIndex = 0
-	let head = Array(blockLength), tail = head
-	
-	function enqueue(value) {
-		if (tailIndex === blockLength) {
-			tailIndex = 0
-			tail = tail.next || (tail.next = Array(blockLength))
-		}
+	let head = Array(), headIndex = 0
+	let tail = head, tailIndex = 0
 
-		tail[tailIndex++] = value
-		return ++length
-	}
+	head.next = Array()
+	head.next.next = head
 
-	function dequeue() {
-		if (length === 0) 
-			return undefined
-
-		--length
-		const value = head[headIndex]
-		head[headIndex] = undefined
-
-		if (++headIndex === blockLength) {
-			headIndex = 0
+	//  same block, headIndex === 0
+	const ABC = {
+		enqueue(value) {
+			tail[ tailIndex++ ] = value
+			return ++length
+		},
+		dequeue() {
 			if (length === 0)
-				tailIndex = 0
+				return undefined
+			const value = head[ headIndex ]
+			head[ headIndex++ ] = undefined
+			if (--length === 0)
+				headIndex = tailIndex = 0
+			else if (tailIndex < head.length)
+				state = E
 			else {
-				const node = head
-				head = head.next
-				node.next = null
-				tail.next = node
+				tail = head.next
+				tailIndex = 0
+				state = KMO
 			}
+			return value
 		}
-
-		return value
 	}
+
+	// same block, headIndex > 0
+	const E = {
+		enqueue(value) {
+			tail[ tailIndex++ ] = value
+			if (tailIndex === tail.length) {
+				tail = tail.next
+				tailIndex = 0
+				state = KMO
+			}
+			return ++length
+		},
+		dequeue() {
+			const value = head[ headIndex ]
+			head[ headIndex++ ] = undefined
+			if (--length === 0) {
+				headIndex = tailIndex = 0
+				state = ABC
+			}
+			return value
+		}
+	}
+
+	// different blocks
+	const KMO = {
+		enqueue: ABC.enqueue,
+		dequeue() {
+			const value = head[ headIndex ]
+			head[ headIndex++ ] = undefined
+			--length
+			if (headIndex === head.length) {
+				head = head.next
+				headIndex = 0
+				state = ABC
+			}
+			return value
+		}
+	}
+
+	let state = ABC
 
 	return {
-		enqueue,
-		dequeue,
+		enqueue(value) { return state.enqueue(value) },
+		dequeue() { return state.dequeue() },
 		get length() { return length },
 	}
 }

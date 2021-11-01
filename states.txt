@@ -1,0 +1,48 @@
+										enq		deq		->
+A)	. . . . . . .    . . . . . . .		B,C		-
+	ht
+
+B)	x x x . . . .    . . . . . . .		B,C		D,E
+	h     t
+
+C)	x x x x x x x    . . . . . . .		C		F,G
+	h             t
+
+D)	. . . . . . .    . . . . . . .						A
+	      ht
+
+E)	. . x x x . .    . . . . . . .		E,F		D,E
+	    h     t
+
+F)	. . . x x x x    . . . . . . .						K
+	      h       t
+
+G)	. . . . . . .    . . . . . . .						A
+	             ht
+
+H)	x x x x x x x    . . . . . . .
+	h                t
+
+I)	x x x x x x x    x x x . . . .
+	h                      t
+
+J)	x x x x x x x    x x x x x x x
+	h                              t
+
+K)	. . . x x x x    . . . . . . .		M,O		K,L
+	      h          t
+
+L)	. . . . . . .    . . . . . . .						A
+	             h   t
+
+M)	. . . x x x x    x x x . . . .		M,O		M,N
+	      h                t
+
+N)	. . . . . . .    x x x . . . .						B
+	             h         t
+
+O)	. . . x x x x    x x x x x x x		O		O,P
+	      h                        t
+
+P)	. . . . . . .    x x x x x x x						C
+	             h                 t
