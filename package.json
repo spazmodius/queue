@@ -1,6 +1,6 @@
 {
   "name": "@spazmodius/queue",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Fast memory-effecient FIFO queue for Node.js",
   "repository": "github:spazmodius/queue",
   "main": "queue.js"
